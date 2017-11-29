@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Landlord_Tenant</string>
+    <string name="login_welcome_message">Welcome to the Landlord Tenant Communication App!</string>
+    <string name="login_message">Please login:</string>
+    <string name="login_username_hint">Enter Username</string>
+    <string name="login_password_hint">Enter Password</string>
+    <string name="login_account_create_message">If you do not have an account, please make one:</string>
+    <string name="login_account_create_button">Create Account</string>
+    <string name="login_button">Login</string>
+    <string name="account_message">Select account type and input account credentials:</string>
+    <string name="account_password_confirm">Confirm Password</string>
+    <string name="account_button">Create Account</string>
+    <string name="account_landlord_checkbox">Landlord</string>
+    <string name="account_tenant_checkbox">Tenant</string>
 </resources>
