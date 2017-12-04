@@ -32,4 +32,10 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, createAccount.class);
         startActivity(intent);
     }
+
+    // TODO: Remove this function after the login feature is implemented
+    public void logintest(View view){
+        Intent intent = new Intent(this, TenantMainActivity.class);
+        startActivity(intent);
+    }
 }
