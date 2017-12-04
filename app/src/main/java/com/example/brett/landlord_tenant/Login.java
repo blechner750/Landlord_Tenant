@@ -16,13 +16,16 @@ public class Login extends AppCompatActivity {
 
         Button login = (Button) findViewById(R.id.login_button);
 
+        /*
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // function to retrieve credentials from database
                 // function to use credentials to go to appropriate activity
             }
         });
+        */
 
         // need to use something to store the form inputs during screen flips
     }
