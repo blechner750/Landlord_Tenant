@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "520828984740",
+    "firebase_url": "https://tenantlandlordproj.firebaseio.com",
+    "project_id": "tenantlandlordproj",
+    "storage_bucket": "tenantlandlordproj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520828984740:android:c83569ad5bef6c53",
+        "android_client_info": {
+          "package_name": "com.example.brett.landlord_tenant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520828984740-t1lj3bvjns5jcrij5h9t8g78un7no2k7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu9r-ySK54ie34NLZ9HxIwwzvxm_KQ4y4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
