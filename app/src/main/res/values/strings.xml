@@ -34,4 +34,5 @@
     <string name="contact_message">Set your info visible to other tenants:</string>
     <string name="contact_buttonOn">Visible</string>
     <string name="contact_buttonOff">Not Visible</string>
+    <string name="preference_file_key">preferences</string>
 </resources>
