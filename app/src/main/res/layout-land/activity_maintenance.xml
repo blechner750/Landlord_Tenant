@@ -39,7 +39,7 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/maint_button" />
 
         <EditText
             android:id="@+id/editText4"
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/maintenance_title" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/maint_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"

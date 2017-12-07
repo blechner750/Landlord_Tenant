@@ -1,9 +1,13 @@
 package com.example.brett.landlord_tenant;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class messagesActivity extends AppCompatActivity {
@@ -23,6 +27,30 @@ public class messagesActivity extends AppCompatActivity {
 
         mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
         mPrefs.getString("message", message_prompt.getText().toString());
+
+        Button button = (Button) findViewById(R.id.maint_button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(messagesActivity.this);
+
+                builder.setTitle("Send the message?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // TODO: Send message on database
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
     }
 
