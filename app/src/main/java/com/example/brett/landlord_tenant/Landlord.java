@@ -2,60 +2,55 @@ package com.example.brett.landlord_tenant;
 
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import java.util.HashMap;
 
-import java.util.ArrayList;
 
 /**
  * Created by kristenwong on 12/4/17.
  */
 
 public class Landlord {
-    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private String mFirstName, mLastName, mUsername;
-    private ArrayList<Tenant> mTenants;
+    private String mFirstName;
+    private String mLastName;
+    private String mUsername;
+    private String mPassword;
+    private String mEmail;
+    private int mPhoneNumber;
+    private HashMap<String, String> mTenants;
 
-    private static final String LANDLORD_TENANT_DEBUG_TAG = "landlord tenant app";
+    private static final String LANDLORD_TENANT_DEBUG_TAG = "LandlordTenantApp";
 
-//   ** use this constructor when creating a new landlord to be added to the database, call addNewLandlord() to ensure that landlord is added
-    Landlord(String first, String last, String userName) {
-        mDatabase = null;
+/*
+    * * Make sure to call updateDatabase() on all Landlord objects after changes are made to ensure
+    * that the changes are reflected in the database.
+    *
+    * - we will probably need to add additional properties as needed later
+ */
+
+    Landlord(String first, String last, String userName, String password) {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord constructor called: " + first + " " + last + " " + userName);
+
         mFirstName = first;
         mLastName = last;
         mUsername = userName;
-        mTenants = new ArrayList<>();
-    }
-
-//    ** use this constructor to get an already existing landlord from the database
-    Landlord(String username) {
-        Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord: onDataChanged called: username = " + username);
-        mDatabase.child("users").child("landlords").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Landlord landlord = dataSnapshot.getValue(Landlord.class);
-
-                if (landlord != null) {
-                    mFirstName = landlord.getmFirstName();
-                    mLastName = landlord.getmLastName();
-                    mUsername = landlord.getmUsername();
-                    mTenants = landlord.getmTenants();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord retrieval error: ", databaseError.toException());
-            }
-        });
+        mPassword = password;
+        mTenants = new HashMap<>();
+        mTenants.put("-0-", "0");
+        mEmail = "";
+        mPhoneNumber = 0;
     }
 
     Landlord() {
-
+        mFirstName = "";
+        mLastName = "";
+        mUsername = "";
+        mPassword = "";
+        mTenants = new HashMap<>();
+        mTenants.put("-0-", "0");
+        mEmail = "";
+        mPhoneNumber = 0;
     }
 
     public String getmFirstName() {
@@ -63,8 +58,8 @@ public class Landlord {
     }
 
     public void setmFirstName(String mFirstName) {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord: setFirstName called");
         this.mFirstName = mFirstName;
-        updateDatabase();
     }
 
     public String getmLastName() {
@@ -72,8 +67,8 @@ public class Landlord {
     }
 
     public void setmLastName(String mLastName) {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord: setLastName called");
         this.mLastName = mLastName;
-        updateDatabase();
     }
 
     public String getmUsername() {
@@ -81,26 +76,47 @@ public class Landlord {
     }
 
     public void setmUsername(String mUsername) {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord: setUserName called");
         this.mUsername = mUsername;
-        updateDatabase();
     }
 
-    public ArrayList<Tenant> getmTenants() {
+    public HashMap<String,String> getmTenants() {
         return mTenants;
     }
 
-    public void setmTenants(ArrayList<Tenant> mTenants) {
+    public String getmPassword() {
+        return mPassword;
+    }
+
+    public void setmPassword(String mPassword) {
+        this.mPassword = mPassword;
+    }
+
+    public void setmTenants(HashMap<String, String> mTenants) {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "Landlord: setTenants called");
         this.mTenants = mTenants;
-        updateDatabase();
     }
 
-    private void updateDatabase() {
-        if (mDatabase == null) addNewLandlord();
-        else mDatabase.child("users").child("landlords").child(mUsername).setValue(this);
+    public int getmPhoneNumber() {
+        return mPhoneNumber;
     }
 
-    public void addNewLandlord() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+    public void setmPhoneNumber(int mPhoneNumber) {
+        this.mPhoneNumber = mPhoneNumber;
+    }
+
+    public String getmEmail() {
+        return mEmail;
+    }
+
+    public void setmEmail(String mEmail) {
+        this.mEmail = mEmail;
+    }
+
+    public void updateDatabase() {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "updating landlord in database: " + this.getmFirstName() + this.getmLastName() + " " + this.getmUsername());
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child("landlords").child(mUsername).setValue(this);
     }
+
 }

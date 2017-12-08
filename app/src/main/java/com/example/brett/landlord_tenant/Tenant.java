@@ -8,56 +8,46 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.HashMap;
 
 /**
  * Created by kristenwong on 12/4/17.
  */
 
 public class Tenant {
-    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private String mFirstName;
     private String mLastName;
     private String mUserName;
     private String mLandlordUserName;
+    private String mPassword;
+    private String mEmail;
+    private int mPhoneNumber;
 
-//    ** We might not need to use UUIDs **
-    private UUID mUUID, mLandlordUUID;
+    private static final String LANDLORD_TENANT_DEBUG_TAG = "LandlordTenantApp";
+/*
+    * * Make sure to call updateDatabase() on all Landlord objects after changes are made to ensure
+    * that the changes are reflected in the database.
+    *
+    * - we will probably need to add additional properties as needed later
+ */
 
-    private static final String LANDLORD_TENANT_DEBUG_TAG = "landlord tenant app";
-
-//    ** use this constructor when creating a new tenant to be added to the database, call addNewTenant() to ensure that tenant is added
-    Tenant(String first, String last, String userName) {
-        mDatabase = null;
+    Tenant(String first, String last, String userName, String password) {
         mFirstName = first;
         mLastName = last;
         mUserName = userName;
-    }
-
-//    ** use this constructor to get an already existing tenant from the database
-    Tenant(String username) {
-        mDatabase.child("users").child("tenants").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Tenant tenant = dataSnapshot.getValue(Tenant.class);
-                mFirstName = tenant.getmFirstName();
-                mLastName = tenant.getmLastName();
-                mUserName = tenant.getmUserName();
-                mUUID = tenant.getmUUID();
-                mLandlordUserName = tenant.getmLandlordUserName();
-                mLandlordUUID = tenant.getmLandlordUUID();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(LANDLORD_TENANT_DEBUG_TAG, "Tenant retrieval error: ", databaseError.toException());
-            }
-        });
+        mPassword = password;
+        mEmail= "";
+        mPhoneNumber = 0;
     }
 
     Tenant() {
-        mDatabase = null;
+        mFirstName = "";
+        mLastName = "";
+        mUserName = "";
+        mLandlordUserName = "";
+        mPassword = "";
+        mEmail = "";
+        mPhoneNumber = 0;
     }
 
     public String getmFirstName() {
@@ -66,7 +56,6 @@ public class Tenant {
 
     public void setmFirstName(String mFirstName) {
         this.mFirstName = mFirstName;
-        updateDatabase();
     }
 
     public String getmLastName() {
@@ -75,25 +64,6 @@ public class Tenant {
 
     public void setmLastName(String mLastName) {
         this.mLastName = mLastName;
-        updateDatabase();
-    }
-
-    public UUID getmUUID() {
-        return mUUID;
-    }
-
-    public void setmUUID(UUID mUUID) {
-        this.mUUID = mUUID;
-        updateDatabase();
-    }
-
-    public UUID getmLandlordUUID() {
-        return mLandlordUUID;
-    }
-
-    public void setmLandlordUUID(UUID mLandlordUUID) {
-        this.mLandlordUUID = mLandlordUUID;
-        updateDatabase();
     }
 
     public String getmLandlordUserName() {
@@ -101,19 +71,27 @@ public class Tenant {
     }
 
     public void setmLandlordUserName(String mLandlordUserName) {
-        Landlord landlord = new Landlord(mLandlordUserName);
-        if (landlord.getmFirstName() != null && landlord.getmLastName() != null && landlord.getmUsername() != null){
-            ArrayList<Tenant> tenants = landlord.getmTenants();
-            tenants.add(this);
-            landlord.setmTenants(tenants);
+        Log.d("LandlordTenantApp", "setLandlord called");
+        DatabaseReference landlordRef = FirebaseDatabase.getInstance().getReference().child("users").child("landlords");
+        landlordRef.child(mLandlordUserName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Landlord landlord = dataSnapshot.getValue(Landlord.class);
+                Log.d("LandlordTenantApp", "landlord retrieved from setLandlord: " + landlord.getmFirstName() + landlord.getmLastName());
+                if(landlord != null) {
+                    HashMap<String, String> tenants =  landlord.getmTenants();
+                    tenants.put(mUserName, mUserName);
+                    landlord.setmTenants(tenants);
+                    landlord.updateDatabase();
+                }
+            }
 
-            this.mLandlordUserName = mLandlordUserName;
-            updateDatabase();
-        } else {
-            Log.d(LANDLORD_TENANT_DEBUG_TAG, "Error setting landlord to tenant - landlord does not exist in database.");
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-
+            }
+        });
+        this.mLandlordUserName = mLandlordUserName;
     }
 
     public String getmUserName() {
@@ -122,16 +100,37 @@ public class Tenant {
 
     public void setmUserName(String mUserName) {
         this.mUserName = mUserName;
-        updateDatabase();
     }
 
-    private void updateDatabase() {
-        if (mDatabase == null) addNewTenant();
-        else mDatabase.child("users").child("tenants").child(mUserName).setValue(this);
+    public String getmPassword() {
+        return mPassword;
     }
 
-    public void addNewTenant() {
-        if (mDatabase == null) mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child("tenants").child(mUserName).setValue(this);
+    public void setmPassword(String mPassword) {
+        this.mPassword = mPassword;
     }
+
+    public int getmPhoneNumber() {
+        return mPhoneNumber;
+    }
+
+    public void setmPhoneNumber(int mPhoneNumber) {
+        this.mPhoneNumber = mPhoneNumber;
+    }
+
+    public String getmEmail() {
+        return mEmail;
+    }
+
+    public void setmEmail(String mEmail) {
+        this.mEmail = mEmail;
+    }
+
+    public void updateDatabase() {
+        Log.d(LANDLORD_TENANT_DEBUG_TAG, "updating tenant in database: " + this.mFirstName + " " + this.mLastName + " " + this.mUserName);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child("tenants");
+        ref.child(mUserName).setValue(this);
+    }
+
+
 }
