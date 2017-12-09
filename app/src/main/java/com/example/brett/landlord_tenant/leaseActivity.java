@@ -31,7 +31,6 @@ public class leaseActivity extends AppCompatActivity {
 
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-
                             // TODO: submit approval to database
                             Toast.makeText(leaseActivity.this, "Signature submitted", Toast.LENGTH_SHORT).show();
                         }

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class maintenanceActivity extends AppCompatActivity {
 
-    SharedPreferences mPrefs;
+    private SharedPreferences mPrefs;
     String title;
     String description;
 
@@ -33,6 +33,9 @@ public class maintenanceActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
         title = mPrefs.getString("title", maintenance_title.getText().toString());
         description = mPrefs.getString("description", maintenance_description.getText().toString());
+
+        maintenance_title.setText(title);
+        maintenance_description.setText(description);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +72,5 @@ public class maintenanceActivity extends AppCompatActivity {
         ed.putString("title", maintenance_title.getText().toString());
         ed.putString("description", maintenance_description.getText().toString());
         ed.commit();
-
     }
 }

@@ -13,6 +13,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
+
 public class createAccount extends AppCompatActivity {
 
     CheckBox account_landlord;
@@ -31,30 +40,27 @@ public class createAccount extends AppCompatActivity {
     EditText phoneNumber;
     EditText password;
     EditText passwordConfirm;
+    EditText firstName;
+    EditText lastName;
+
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = db.getReference();
+    List<Tenant> tenants;
+    List<Landlord> landlord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+        checkDatabaseReference();
+        mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
+
         username = (EditText) findViewById(R.id.account_username);
         emailAddress = (EditText) findViewById(R.id.account_email);
         phoneNumber = (EditText) findViewById(R.id.account_phone);
         password = (EditText) findViewById(R.id.account_password);
         passwordConfirm = (EditText) findViewById(R.id.account_confirm);
-
-        mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
-        name = mPrefs.getString("name", username.getText().toString());
-        email = mPrefs.getString("email", emailAddress.getText().toString());
-        phone = mPrefs.getString("phone", phoneNumber.getText().toString());
-        pass = mPrefs.getString("pass", password.getText().toString());
-        passConfirm = mPrefs.getString("passConfirm", passwordConfirm.getText().toString());
-
-        username.setText(name);
-        emailAddress.setText(email);
-        phoneNumber.setText(phone);
-        password.setText(pass);
-        passwordConfirm.setText(passConfirm);
 
 
         account_landlord = (CheckBox) findViewById(R.id.landlord_checkBox);
@@ -88,7 +94,9 @@ public class createAccount extends AppCompatActivity {
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // TODO: submit approval to database
+                        if(!findType(username.getText().toString())){
+                            makeAccount();
+                        }
                         Toast.makeText(createAccount.this, "Account created", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -101,9 +109,6 @@ public class createAccount extends AppCompatActivity {
                 dialog.show();
             }
         });
-
-
-        // need method to store form and checkbox data when screen flips
     }
 
     protected void onPause(){
@@ -115,6 +120,8 @@ public class createAccount extends AppCompatActivity {
         phoneNumber = (EditText) findViewById(R.id.account_phone);
         password = (EditText) findViewById(R.id.account_password);
         passwordConfirm = (EditText) findViewById(R.id.account_confirm);
+        firstName = (EditText) findViewById(R.id.account_first);
+        lastName = (EditText) findViewById(R.id.account_last);
 
         ed.putString("name", username.getText().toString());
         ed.putString("email", emailAddress.getText().toString());
@@ -123,5 +130,146 @@ public class createAccount extends AppCompatActivity {
         ed.putString("passConfirm", passwordConfirm.getText().toString());
 
         ed.commit();
+    }
+
+    public void  makeAccount(){
+        Tenant tenant = new Tenant();
+        Landlord landlord = new Landlord();
+        username = (EditText) findViewById(R.id.account_username);
+        emailAddress = (EditText) findViewById(R.id.account_email);
+        phoneNumber = (EditText) findViewById(R.id.account_phone);
+        password = (EditText) findViewById(R.id.account_password);
+        passwordConfirm = (EditText) findViewById(R.id.account_confirm);
+        firstName = (EditText) findViewById(R.id.account_first);
+        lastName = (EditText) findViewById(R.id.account_last);
+
+
+        account_landlord = (CheckBox) findViewById(R.id.landlord_checkBox);
+        account_tenant = (CheckBox) findViewById(R.id.tenant_checkBox);
+        if(account_tenant.isChecked()){
+            if(passwordConfirm.getText().toString() != password.getText().toString()){
+                Toast.makeText(this, passwordConfirm.getText().toString() + " " + password.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+            else{
+                int i = Integer.parseInt(phoneNumber.getText().toString());
+                tenant.setmUserName(username.getText().toString());
+                tenant.setmEmail(emailAddress.getText().toString());
+                tenant.setmPassword(password.getText().toString());
+                tenant.setmFirstName(firstName.getText().toString());
+                tenant.setmLastName(lastName.getText().toString());
+                tenant.setmPhoneNumber(i);
+
+                tenant.updateDatabase();
+                Toast.makeText(this, "Account created", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (account_landlord.isChecked()){
+            if(!passwordConfirm.getText().toString().equals(password.getText().toString())){
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                int i = Integer.parseInt(phoneNumber.getText().toString());
+                landlord.setmUsername(username.getText().toString());
+                landlord.setmEmail(emailAddress.getText().toString());
+                landlord.setmPassword(password.getText().toString());
+                landlord.setmFirstName(firstName.getText().toString());
+                landlord.setmLastName(lastName.getText().toString());
+                landlord.setmPhoneNumber(i);
+
+                landlord.updateDatabase();
+                Toast.makeText(this, "Account created", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Toast.makeText(this, "No account type selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void checkDatabaseReference(){
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("users")){
+                    if(dataSnapshot.hasChild("tenants")){
+                        getTenantList();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("users")){
+                    if(dataSnapshot.hasChild("landlords")){
+                        getLandlordList();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getTenantList(){
+        myRef.child("users").child("tenants").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<List<Tenant>> genericTypeIndicator = new GenericTypeIndicator<List<Tenant>>(){};
+                tenants = dataSnapshot.getValue(genericTypeIndicator);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getLandlordList(){
+        myRef.child("users").child("tenants").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GenericTypeIndicator<List<Landlord>> genericTypeIndicator = new GenericTypeIndicator<List<Landlord>>(){};
+                landlord = dataSnapshot.getValue(genericTypeIndicator);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public boolean findType(String username){
+        boolean check = false;
+        if(tenants != null){
+            if(!tenants.isEmpty()){
+                for(int i =0; i<tenants.size();i++){
+                    if(username == tenants.get(i).getmUserName()){
+                        check = true;
+                    }
+                }
+            }
+        }
+
+        if(landlord != null){
+            if(!landlord.isEmpty()){
+                for(int i =0; i<landlord.size();i++){
+                    if(username == landlord.get(i).getmUsername()){
+                        check =true;
+                    }
+                }
+            }
+        }
+        return check;
     }
 }

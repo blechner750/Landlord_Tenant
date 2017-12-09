@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class TenantMainActivity extends AppCompatActivity {
 
@@ -13,6 +16,13 @@ public class TenantMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenant_main);
         Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        String name = "";
+        if(extras!= null){
+            name = extras.getString("name");
+        }
+        TextView welcome_name = (TextView) findViewById(R.id.welcome_name);
+        welcome_name.setText(name);
     }
 
     public void maintenance(View view){
