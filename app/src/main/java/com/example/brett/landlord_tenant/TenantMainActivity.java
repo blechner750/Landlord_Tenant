@@ -11,15 +11,17 @@ import org.w3c.dom.Text;
 
 public class TenantMainActivity extends AppCompatActivity {
 
+    String name = "";
+    String identifier = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenant_main);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        String name = "";
         if(extras!= null){
             name = extras.getString("name");
+            identifier = extras.getString("identifier");
         }
         TextView welcome_name = (TextView) findViewById(R.id.welcome_name);
         welcome_name.setText(name);
@@ -27,6 +29,8 @@ public class TenantMainActivity extends AppCompatActivity {
 
     public void maintenance(View view){
         Intent intent = new Intent(this, maintenanceActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 

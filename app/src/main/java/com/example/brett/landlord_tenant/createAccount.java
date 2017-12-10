@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class createAccount extends AppCompatActivity {
@@ -45,8 +46,8 @@ public class createAccount extends AppCompatActivity {
 
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference myRef = db.getReference();
-    List<Tenant> tenants;
-    List<Landlord> landlord;
+    List<Tenant> tenants = new ArrayList<>();
+    List<Landlord> landlords = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,6 @@ public class createAccount extends AppCompatActivity {
                         if(!findType(username.getText().toString())){
                             makeAccount();
                         }
-                        Toast.makeText(createAccount.this, "Account created", Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -146,9 +146,29 @@ public class createAccount extends AppCompatActivity {
 
         account_landlord = (CheckBox) findViewById(R.id.landlord_checkBox);
         account_tenant = (CheckBox) findViewById(R.id.tenant_checkBox);
+
+        if(tenants != null){
+            for(int i=0;i<tenants.size();i++){
+                if(username.getText().toString().equals(tenants.get(i).getmUserName())){
+                    Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        }
+
+        if(landlords != null){
+            for(int i =0; i<landlords.size();i++){
+                if(username.getText().toString().equals(landlords.get(i).getmUsername())){
+                    Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+        }
+
+
         if(account_tenant.isChecked()){
-            if(passwordConfirm.getText().toString() != password.getText().toString()){
-                Toast.makeText(this, passwordConfirm.getText().toString() + " " + password.getText().toString(), Toast.LENGTH_SHORT).show();
+            if(!passwordConfirm.getText().toString().equals(password.getText().toString())){
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
             }
             else{
                 int i = Integer.parseInt(phoneNumber.getText().toString());
@@ -190,7 +210,7 @@ public class createAccount extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("users")){
-                    if(dataSnapshot.hasChild("tenants")){
+                    if(dataSnapshot.child("users").hasChild("tenants")){
                         getTenantList();
                     }
                 }
@@ -206,7 +226,7 @@ public class createAccount extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("users")){
-                    if(dataSnapshot.hasChild("landlords")){
+                    if(dataSnapshot.child("users").hasChild("landlords")){
                         getLandlordList();
                     }
                 }
@@ -223,8 +243,9 @@ public class createAccount extends AppCompatActivity {
         myRef.child("users").child("tenants").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tenant>> genericTypeIndicator = new GenericTypeIndicator<List<Tenant>>(){};
-                tenants = dataSnapshot.getValue(genericTypeIndicator);
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    tenants.add(postSnapshot.getValue(Tenant.class));
+                }
             }
 
             @Override
@@ -235,11 +256,12 @@ public class createAccount extends AppCompatActivity {
     }
 
     public void getLandlordList(){
-        myRef.child("users").child("tenants").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("users").child("landlords").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Landlord>> genericTypeIndicator = new GenericTypeIndicator<List<Landlord>>(){};
-                landlord = dataSnapshot.getValue(genericTypeIndicator);
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    landlords.add(postSnapshot.getValue(Landlord.class));
+                }
             }
 
             @Override
@@ -261,10 +283,10 @@ public class createAccount extends AppCompatActivity {
             }
         }
 
-        if(landlord != null){
-            if(!landlord.isEmpty()){
-                for(int i =0; i<landlord.size();i++){
-                    if(username == landlord.get(i).getmUsername()){
+        if(landlords != null){
+            if(!landlords.isEmpty()){
+                for(int i =0; i<landlords.size();i++){
+                    if(username == landlords.get(i).getmUsername()){
                         check =true;
                     }
                 }

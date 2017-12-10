@@ -80,12 +80,12 @@
             android:layout_marginTop="8dp"
             android:text="@string/maintenance_list"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toTopOf="@+id/listView2"
+            app:layout_constraintBottom_toTopOf="@+id/maintenance_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ListView
-            android:id="@+id/listView2"
+            android:id="@+id/maintenance_list"
             android:layout_width="0dp"
             android:layout_height="213dp"
             android:layout_marginBottom="8dp"

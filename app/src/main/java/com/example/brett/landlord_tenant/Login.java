@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
     private String name;
     private String pass;
     String fullName;
+    String identifier;
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference myRef = db.getReference();
     List<Tenant> tenants = new ArrayList<Tenant>();
@@ -86,7 +87,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("users")){
-                    if(dataSnapshot.hasChild("tenants")){
+                    if(dataSnapshot.child("users").hasChild("tenants")){
                         getTenantList();
                     }
                 }
@@ -119,8 +120,9 @@ public class Login extends AppCompatActivity {
         myRef.child("users").child("tenants").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<List<Tenant>> genericTypeIndicator = new GenericTypeIndicator<List<Tenant>>(){};
-                tenants = dataSnapshot.getValue(genericTypeIndicator);
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                    tenants.add(postSnapshot.getValue(Tenant.class));
+                }
             }
 
             @Override
@@ -157,6 +159,7 @@ public class Login extends AppCompatActivity {
                 for(int i =0; i<tenants.size();i++){
                     if(username.equals(tenants.get(i).getmUserName())){
                         fullName = tenants.get(i).getmFirstName() + " " + tenants.get(i).getmLastName();
+                        identifier = "tenant";
                         check = checkTenant(username, password);
                     }
                 }
@@ -168,6 +171,7 @@ public class Login extends AppCompatActivity {
                 for(int i =0; i<landlord.size();i++){
                     if(username.equals(landlord.get(i).getmUsername())){
                         fullName = landlord.get(i).getmFirstName() + " " + landlord.get(i).getmLastName();
+                        identifier = "landlord";
                         check = checkLandlord(username, password);
                     }
                 }
@@ -217,6 +221,7 @@ public class Login extends AppCompatActivity {
     public void login(View view){
         Intent intent = new Intent(this, TenantMainActivity.class);
         intent.putExtra("name", fullName);
+        intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 }
