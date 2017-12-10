@@ -79,13 +79,13 @@
             android:layout_marginTop="8dp"
             android:text="@string/maintenance_list"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toTopOf="@+id/listView3"
+            app:layout_constraintBottom_toTopOf="@+id/maintenance_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.029" />
 
         <ListView
-            android:id="@+id/listView3"
+            android:id="@+id/maintenance_list"
             android:layout_width="0dp"
             android:layout_height="265dp"
             android:layout_marginBottom="8dp"

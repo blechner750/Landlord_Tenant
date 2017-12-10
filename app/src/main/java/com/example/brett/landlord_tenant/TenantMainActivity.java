@@ -36,6 +36,8 @@ public class TenantMainActivity extends AppCompatActivity {
 
     public void messages(View view){
         Intent intent = new Intent(this, messagesActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 

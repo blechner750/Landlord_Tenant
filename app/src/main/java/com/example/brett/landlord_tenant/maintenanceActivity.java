@@ -38,7 +38,7 @@ public class maintenanceActivity extends AppCompatActivity {
     EditText maintenance_description;
 
     FirebaseDatabase db = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = db.getReference().child("messages");
+    DatabaseReference myRef = db.getReference().child("maintenance");
     List<Maintenance> maintenances = new ArrayList<>();
 
 
@@ -105,7 +105,6 @@ public class maintenanceActivity extends AppCompatActivity {
                     adb.setNegativeButton("No", null);
                     adb.setPositiveButton("Yes", new AlertDialog.OnClickListener(){
                         public void onClick(DialogInterface dialogInterface, int which){
-                            // TODO: Make notification for tenants
                             mAdapter.getRef(position).removeValue();
                         }
                     });

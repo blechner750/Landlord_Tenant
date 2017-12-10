@@ -64,13 +64,13 @@
             android:layout_marginTop="8dp"
             android:text="@string/message_list"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            app:layout_constraintBottom_toTopOf="@+id/listView"
+            app:layout_constraintBottom_toTopOf="@+id/messages_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.16" />
 
         <ListView
-            android:id="@+id/listView"
+            android:id="@+id/messages_list"
             android:layout_width="368dp"
             android:layout_height="260dp"
             android:layout_marginBottom="8dp"

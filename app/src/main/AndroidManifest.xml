@@ -16,16 +16,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".createAccount"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".createAccount"
+            android:screenOrientation="portrait" />
         <activity android:name=".TenantMainActivity" />
-        <activity android:name=".maintenanceActivity" />
+        <activity android:name=".maintenanceActivity"/>
         <activity android:name=".messagesActivity" />
         <activity android:name=".rentActivity" />
         <activity android:name=".contactActivity" />
         <activity android:name=".utilitiesActivity" />
-        <activity android:name=".leaseActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".leaseActivity"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

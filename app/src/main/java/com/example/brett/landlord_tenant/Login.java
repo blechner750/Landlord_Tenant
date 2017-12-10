@@ -1,8 +1,10 @@
 package com.example.brett.landlord_tenant;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,10 +37,31 @@ public class Login extends AppCompatActivity {
     List<Tenant> tenants = new ArrayList<Tenant>();
     List<Landlord> landlord = new ArrayList<Landlord>();
 
+    private BroadcastReceiver broadcastReceiver;
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        if(broadcastReceiver == null){
+            broadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                }
+            };
+        }
+        registerReceiver(broadcastReceiver, new IntentFilter("automatic_checkIn"));
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Intent x = new Intent(getApplicationContext(), NotificationService.class);
+        startService(x);
 
         final EditText username = (EditText) findViewById(R.id.username_form);
         final EditText password = (EditText) findViewById(R.id.password_form);
