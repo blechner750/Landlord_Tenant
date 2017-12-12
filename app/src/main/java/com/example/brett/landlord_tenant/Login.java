@@ -60,9 +60,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Intent x = new Intent(getApplicationContext(), NotificationService.class);
-        startService(x);
-
         final EditText username = (EditText) findViewById(R.id.username_form);
         final EditText password = (EditText) findViewById(R.id.password_form);
 
@@ -70,8 +67,8 @@ public class Login extends AppCompatActivity {
         final Button login = (Button) findViewById(R.id.login_button);
 
         sharedPreferences = getSharedPreferences("key", Context.MODE_PRIVATE);
-        name = sharedPreferences.getString("pass", password.getText().toString());
-        pass = sharedPreferences.getString("name", username.getText().toString());
+        name = sharedPreferences.getString("name", password.getText().toString());
+        pass = sharedPreferences.getString("pass", username.getText().toString());
 
         username.setText(name);
         password.setText(pass);
@@ -242,8 +239,10 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View view){
+        final EditText username = (EditText) findViewById(R.id.username_form);
         Intent intent = new Intent(this, TenantMainActivity.class);
         intent.putExtra("name", fullName);
+        intent.putExtra("username", username.getText().toString());
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }

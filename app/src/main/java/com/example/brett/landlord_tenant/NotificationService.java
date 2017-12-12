@@ -25,11 +25,22 @@ public class NotificationService extends Service {
     int messages_count=0;
     int slave =1;
     int slave2 = 1;
+    String name = "";
+    String identifier = "";
+    String landlord = "";
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int StartId){
+        name = (String) intent.getExtras().get("name");
+        identifier = (String) intent.getExtras().get("identifier");
+        landlord = (String) intent.getExtras().get("landlord");
+        return START_STICKY;
     }
 
     @Override
