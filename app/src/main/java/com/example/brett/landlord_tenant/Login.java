@@ -1,5 +1,6 @@
 package com.example.brett.landlord_tenant;
 
+import android.content.Intent;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
+    private Button mStartLandlordBillPay;
+
+    private static final String KEY_LANDLORD_USERNAME = "landlordUsername";
 
     private SharedPreferences sharedPreferences;
     private String name;
@@ -59,7 +63,7 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        
         final EditText username = (EditText) findViewById(R.id.username_form);
         final EditText password = (EditText) findViewById(R.id.password_form);
 

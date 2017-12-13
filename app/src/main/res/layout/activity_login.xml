@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.brett.landlord_tenant.Login">
-
     <TextView
         android:id="@+id/welcome_message"
         android:layout_width="wrap_content"
