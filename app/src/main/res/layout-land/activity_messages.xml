@@ -41,13 +41,26 @@
 
         <Button
             android:id="@+id/maint_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="121dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
+            android:background="@android:drawable/gallery_thumb"
+            android:backgroundTint="@android:color/holo_blue_bright"
             android:text="@string/message_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@android:color/holo_blue_bright"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_send" />
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout

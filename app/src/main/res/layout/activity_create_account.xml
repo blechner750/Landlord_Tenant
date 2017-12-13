@@ -85,11 +85,12 @@
 
     <Button
         android:id="@+id/account_create_button"
-        android:layout_width="125dp"
-        android:layout_height="34dp"
+        android:layout_width="122dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:drawable/btn_default"
+        android:backgroundTint="@android:color/holo_blue_bright"
         android:text="@string/account_button"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintEnd_toEndOf="parent"
