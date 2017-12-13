@@ -9,7 +9,10 @@
     <color name="colorSalmon">#DAA49A</color>
     <color name="colorPaleGreen">#79c879</color>
     <color name="colorRed">#ff4c4c</color>
-
     <color name="colorControlActivated">#58A4B0</color>
     <color name="colorControlNormal">#DAA49A</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#424cc2</color>
+
 </resources>
