@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Landlord_Tenant</string>
+    <string name="bill_tenants">Bill Tenants</string>
+    <string name="bill_history">Bill History</string>
+    <string name="choose_tenant_to_bill">Choose Tenant to Bill:</string>
+    <string name="enter_amount">Enter Amount:</string>
+    <string name="choose_due_date">Choose Due Date</string>
+    <string name="add_message">Add Message:</string>
+    <string name="submit">Submit</string>
+    <string name="paid">PAID</string>
+    <string name="unpaid">UNPAID</string>
+    <string name="mark_paid">Mark Paid</string>
 </resources>
