@@ -21,18 +21,23 @@
             android:name=".createAccount"
             android:screenOrientation="portrait" />
         <activity android:name=".TenantMainActivity" />
-        <activity android:name=".maintenanceActivity"/>
+        <activity android:name=".maintenanceActivity" />
         <activity android:name=".messagesActivity" />
         <activity android:name=".rentActivity" />
         <activity android:name=".contactActivity" />
         <activity android:name=".utilitiesActivity" />
         <activity
             android:name=".leaseActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".TenantMainActivity"/>
             android:screenOrientation="portrait" />
+
         <service
             android:name=".NotificationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".SignatureActivity"></activity>
     </application>
 
 </manifest>

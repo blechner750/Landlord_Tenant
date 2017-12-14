@@ -10,7 +10,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_weight="2">
 
         <TextView
             android:id="@+id/textView9"
@@ -39,22 +39,6 @@
             android:text="@string/lease_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <EditText
-            android:id="@+id/lease_prompt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="72dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:hint="@string/lease_prompt"
-            android:inputType="textPersonName"
-            android:singleLine="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <CheckBox
             android:id="@+id/lease_checkbox"

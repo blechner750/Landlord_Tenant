@@ -1,6 +1,7 @@
 package com.example.brett.landlord_tenant;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,23 +26,8 @@ public class leaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(leaseActivity.this);
-
-                    builder.setTitle("You are sure you want to submit?");
-
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // TODO: submit approval to database
-                            Toast.makeText(leaseActivity.this, "Signature submitted", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    Intent intent = new Intent(leaseActivity.this, SignatureActivity.class);
+                    startActivity(intent);
                 }//if
                 else{
                     Toast.makeText(leaseActivity.this, "Check that you have read and understand the lease", Toast.LENGTH_SHORT).show();
