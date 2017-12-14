@@ -80,7 +80,7 @@ public class TenantMainActivity extends AppCompatActivity {
     }
 
     public void rent(View view){
-        Intent intent = new Intent(this, rentActivity.class);
+        Intent intent = new Intent(this, LandlordRentActivity.class);
         startActivity(intent);
     }
 
