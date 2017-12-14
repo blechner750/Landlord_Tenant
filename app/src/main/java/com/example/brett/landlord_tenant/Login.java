@@ -18,7 +18,10 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        myWebView = findViewById(R.id.webview);
+        Intent intent = new Intent(Login.this, SignatureActivity.class);
+        startActivity(intent);
+
+        /*myWebView = findViewById(R.id.webview);
         myWebView.getSettings().setSupportZoom(true);
         myWebView.getSettings().setBuiltInZoomControls(true);
         myWebView.getSettings().setDisplayZoomControls(true);
@@ -36,7 +39,7 @@ public class Login extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "app not installed", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override
