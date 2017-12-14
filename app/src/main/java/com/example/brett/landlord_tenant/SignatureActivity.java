@@ -48,7 +48,7 @@ public class SignatureActivity extends AppCompatActivity {
                 path = saveImage(bitmap);
             }
         });
-        
+
     }
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
