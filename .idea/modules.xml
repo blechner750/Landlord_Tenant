@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Landlord.iml" filepath="$PROJECT_DIR$/Landlord.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LandlordTenantProj.iml" filepath="$PROJECT_DIR$/LandlordTenantProj.iml" />
+      <module fileurl="file://E:\Docs\Android Projects\new\Landlord_Tenant\Landlord.iml" filepath="E:\Docs\Android Projects\new\Landlord_Tenant\Landlord.iml" />
+      <module fileurl="file://E:\Docs\Android Projects\new\Landlord_Tenant\LandlordTenantProj.iml" filepath="E:\Docs\Android Projects\new\Landlord_Tenant\LandlordTenantProj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Landlord_Tenant.iml" filepath="$PROJECT_DIR$/Landlord_Tenant.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
