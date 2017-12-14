@@ -4,21 +4,18 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
 
-public class Login extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
 
     WebView myWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_webview);
 
-        Intent intent = new Intent(Login.this, SignatureActivity.class);
+        Intent intent = new Intent(WebViewActivity.this, SignatureActivity.class);
         startActivity(intent);
 
         /*myWebView = findViewById(R.id.webview);

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.brett.landlord_tenant.Login">
+    tools:context="com.example.brett.landlord_tenant.SignatureActivity">
 
     <com.kyanogen.signatureview.SignatureView
         xmlns:sign="http://schemas.android.com/apk/res-auto"
