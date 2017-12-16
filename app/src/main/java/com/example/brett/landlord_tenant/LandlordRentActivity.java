@@ -35,7 +35,7 @@ public class LandlordRentActivity extends AppCompatActivity{
     private float mBillAmount;
     private ArrayList<String> mTenantList;
     private ArrayAdapter<String> mSpinnerAdapter;
-    private LandlordBillListAdapter mBillListAdapter;
+    private BillListAdapter mBillListAdapter;
     private ArrayList<Bill> mBillsList;
 
     private static final String DATE_DIALOG_TAG = "dateDialog";
@@ -154,7 +154,8 @@ public class LandlordRentActivity extends AppCompatActivity{
 
         mListView = (ListView) findViewById(R.id.listview_landlord_bill_history);
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        mBillListAdapter = new LandlordBillListAdapter(mBillsList, getApplicationContext());
+        mBillListAdapter = new BillListAdapter(mBillsList, getApplicationContext());
+        mBillListAdapter.setmIsLandlord(true);
         mListView.setAdapter(mBillListAdapter);
         getBillsList();
 
