@@ -1,10 +1,8 @@
 package com.example.brett.landlord_tenant;
 
 import android.content.Intent;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +16,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Login extends AppCompatActivity {
     private Button mStartLandlordBillPay;
@@ -41,22 +36,7 @@ public class Login extends AppCompatActivity {
     List<Tenant> tenants = new ArrayList<Tenant>();
     List<Landlord> landlord = new ArrayList<Landlord>();
 
-    private BroadcastReceiver broadcastReceiver;
-    @Override
-    protected void onResume(){
-        super.onResume();
 
-        if(broadcastReceiver == null){
-            broadcastReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-
-                }
-            };
-        }
-        registerReceiver(broadcastReceiver, new IntentFilter("automatic_checkIn"));
-
-    }
 
 
     @Override
@@ -244,7 +224,7 @@ public class Login extends AppCompatActivity {
 
     public void login(View view){
         final EditText username = (EditText) findViewById(R.id.username_form);
-        Intent intent = new Intent(this, TenantMainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("name", fullName);
         intent.putExtra("username", username.getText().toString());
         intent.putExtra("identifier", identifier);

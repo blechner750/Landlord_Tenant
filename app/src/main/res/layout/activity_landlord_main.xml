@@ -79,42 +79,16 @@
 
     <Button
         android:id="@+id/welcome_button_contact"
-        android:layout_width="98dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="129dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:drawable/gallery_thumb"
         android:backgroundTint="@android:color/holo_blue_bright"
         android:onClick="contacts"
         android:text="@string/welcome_contact"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <Button
-        android:id="@+id/welcome_button_utilities"
-        android:layout_width="97dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:drawable/gallery_thumb"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        android:onClick="utilities"
-        android:text="@string/welcome_utilities"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_button_contact" />
-
-    <Button
-        android:id="@+id/welcome_button_lease"
-        android:layout_width="98dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:drawable/gallery_thumb"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        android:onClick="lease"
-        android:text="@string/welcome_lease"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_button_utilities" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_rent" />
 
     <ImageView
         android:id="@+id/image_message"
@@ -151,35 +125,13 @@
 
     <ImageView
         android:id="@+id/image_contact"
-        android:layout_width="95dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/holo_blue_bright"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:srcCompat="@drawable/ic_action_name" />
-
-    <ImageView
-        android:id="@+id/image_utilities"
-        android:layout_width="95dp"
+        android:layout_width="131dp"
         android:layout_height="51dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/holo_blue_bright"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_contact"
-        app:srcCompat="@drawable/button_utilities" />
-
-    <ImageView
-        android:id="@+id/image_lease"
-        android:layout_width="96dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/holo_blue_bright"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_utilities"
-        app:srcCompat="@drawable/button_lease" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_rent"
+        app:srcCompat="@drawable/ic_action_name" />
 
 </android.support.constraint.ConstraintLayout>

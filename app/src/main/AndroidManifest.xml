@@ -20,7 +20,7 @@
         <activity
             android:name=".createAccount"
             android:screenOrientation="portrait" />
-        <activity android:name=".TenantMainActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".maintenanceActivity"/>
         <activity android:name=".messagesActivity" />
         <activity android:name=".rentActivity" />

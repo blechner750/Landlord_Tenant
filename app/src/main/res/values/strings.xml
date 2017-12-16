@@ -28,6 +28,7 @@
     <string name="account_last_hint">Last Name</string>
     <string name="welcome_message">Welcome,</string>
     <string name="welcome_maintenance">Maintenance Request</string>
+    <string name="welcome_maintenance_landlord">Maintenance Requests</string>
     <string name="welcome_utilities">Utilities</string>
     <string name="welcome_lease">Lease</string>
     <string name="welcome_messageComplaint">Messages</string>

@@ -15,13 +15,13 @@
         android:layout_marginTop="8dp"
         android:text="@string/contact_welcome"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toTopOf="@+id/listView4"
+        app:layout_constraintBottom_toTopOf="@+id/contact_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <ListView
-        android:id="@+id/listView4"
+        android:id="@+id/contact_list"
         android:layout_width="364dp"
         android:layout_height="430dp"
         android:layout_marginBottom="8dp"

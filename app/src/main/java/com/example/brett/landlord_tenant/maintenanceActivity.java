@@ -48,7 +48,7 @@ public class maintenanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maintenance);
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -57,17 +57,51 @@ public class maintenanceActivity extends AppCompatActivity {
             identifier = extras.getString("identifier");
         }
 
-        Button button = (Button) findViewById(R.id.maint_button);
+        if(identifier.equals("landlord")){
+            setContentView(R.layout.activity_maintenance_landlord);
+        }
+        else if (identifier.equals("tenant")){
+            setContentView(R.layout.activity_maintenance);
+            Button button = (Button) findViewById(R.id.maint_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(maintenanceActivity.this);
 
-        maintenance_title = (EditText) findViewById(R.id.maintenance_title);
-        maintenance_description = (EditText) findViewById(R.id.maintenance_description);
+                    builder.setTitle("You are sure you want to submit?");
 
-        mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
-        title = mPrefs.getString("title", maintenance_title.getText().toString());
-        description = mPrefs.getString("description", maintenance_description.getText().toString());
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            myRef.push().setValue(new Maintenance(name, maintenance_title.getText().toString(), maintenance_description.getText().toString()) );
+                            Toast.makeText(maintenanceActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-        maintenance_title.setText(title);
-        maintenance_description.setText(description);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+            maintenance_title = (EditText) findViewById(R.id.maintenance_title);
+            maintenance_description = (EditText) findViewById(R.id.maintenance_description);
+
+            mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
+            title = mPrefs.getString("title", maintenance_title.getText().toString());
+            description = mPrefs.getString("description", maintenance_description.getText().toString());
+
+            maintenance_title.setText(title);
+            maintenance_description.setText(description);
+        }
+        else{
+            setContentView(R.layout.activity_maintenance);
+        }
+
+
+
+
         checkDatabaseReference();
 
         final ListView list = (ListView) findViewById(R.id.maintenance_list);
@@ -114,42 +148,21 @@ public class maintenanceActivity extends AppCompatActivity {
             }
         });
 
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(maintenanceActivity.this);
-
-                builder.setTitle("You are sure you want to submit?");
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        myRef.push().setValue(new Maintenance(name, maintenance_title.getText().toString(), maintenance_description.getText().toString()) );
-                        Toast.makeText(maintenanceActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
     }
 
     protected void onPause(){
         super.onPause();
 
-        maintenance_title = (EditText) findViewById(R.id.maintenance_title);
-        maintenance_description = (EditText) findViewById(R.id.maintenance_description);
+        if(identifier.equals("tenant")){
+            maintenance_title = (EditText) findViewById(R.id.maintenance_title);
+            maintenance_description = (EditText) findViewById(R.id.maintenance_description);
 
-        SharedPreferences.Editor ed = mPrefs.edit();
-        ed.putString("title", maintenance_title.getText().toString());
-        ed.putString("description", maintenance_description.getText().toString());
-        ed.commit();
+            SharedPreferences.Editor ed = mPrefs.edit();
+            ed.putString("title", maintenance_title.getText().toString());
+            ed.putString("description", maintenance_description.getText().toString());
+            ed.commit();
+        }
+
     }
 
     public void checkDatabaseReference(){
