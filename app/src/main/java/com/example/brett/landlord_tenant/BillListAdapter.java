@@ -19,13 +19,14 @@ import java.util.ArrayList;
  * Created by kristenwong on 12/12/17.
  */
 
-public class LandlordBillListAdapter extends BaseAdapter {
+public class BillListAdapter extends BaseAdapter {
     private ArrayList<Bill> mBillList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private boolean mIsLandlord;
     private ArrayList<Boolean> misItemChecked;
 
-    LandlordBillListAdapter(ArrayList<Bill> billList, Context context) {
+    BillListAdapter(ArrayList<Bill> billList, Context context) {
         mBillList = billList;
         mInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         mContext = context;
@@ -67,7 +68,8 @@ public class LandlordBillListAdapter extends BaseAdapter {
         String billAmountString = "$" + format.format(bill.getmAmount());
         billAmount.setText(billAmountString);
 
-        billReceiver.setText(bill.getmTenant());
+        if(ismIsLandlord()) billReceiver.setText(bill.getmTenant());
+        else billReceiver.setText(bill.getmLandlord());
 
         message.setText(bill.getmMessage());
 
@@ -91,5 +93,13 @@ public class LandlordBillListAdapter extends BaseAdapter {
     public void updateList(ArrayList<Bill> billList) {
         mBillList = billList;
         notifyDataSetChanged();
+    }
+
+    public boolean ismIsLandlord() {
+        return mIsLandlord;
+    }
+
+    public void setmIsLandlord(boolean mIsLandlord) {
+        this.mIsLandlord = mIsLandlord;
     }
 }

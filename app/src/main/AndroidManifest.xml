@@ -16,8 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LandlordRentActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".LandlordRentActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".TenantRentActivity"></activity>
     </application>
 
 </manifest>
