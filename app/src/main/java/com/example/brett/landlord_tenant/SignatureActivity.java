@@ -96,6 +96,8 @@ public class SignatureActivity extends AppCompatActivity {
         return "";*/
     }
 
+
+    // String encodedImage should be pulled from the firebase db
     public void loadImage(String encodedImage) {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
