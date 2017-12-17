@@ -53,31 +53,11 @@ public class MainActivity extends AppCompatActivity {
         TextView welcome_name = (TextView) findViewById(R.id.welcome_name);
         welcome_name.setText(name);
 
-        getLandlord();
-
         Intent x = new Intent(getApplicationContext(), NotificationService.class);
         x.putExtra("name", name);
         x.putExtra("identifier", identifier);
         x.putExtra("landlord",landlordName);
         startService(x);
-    }
-
-    private void getLandlord() {
-        DatabaseReference landlordRef = FirebaseDatabase.getInstance().getReference().child("users").child("tenants");
-        landlordRef.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Landlord landlord = dataSnapshot.getValue(Landlord.class);
-                if(landlord != null) {
-                    landlordName = landlord.getmUsername();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void maintenance(View view){
@@ -99,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TenantRentActivity.class);
             intent.putExtra("name", name);
             intent.putExtra("tenantusername", username);
-            intent.putExtra("landlordUsername", name);
+            intent.putExtra("landlordUsername", landlordName);
             intent.putExtra("identifier", identifier);
             startActivity(intent);
         }
@@ -116,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
     public void contacts(View view){
         Intent intent = new Intent(this, contactActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }

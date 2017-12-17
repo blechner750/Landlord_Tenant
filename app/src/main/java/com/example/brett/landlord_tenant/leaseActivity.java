@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+
+// TODO: make seperate layout in order to give landlord ability for the lease to be seen
 public class leaseActivity extends AppCompatActivity {
 
     CheckBox checkBox;

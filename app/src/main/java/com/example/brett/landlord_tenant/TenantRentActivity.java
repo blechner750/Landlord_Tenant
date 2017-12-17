@@ -16,6 +16,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+
+// TODO: make WebView Activity available for tenants to use Venmo to "pay bill"
 public class TenantRentActivity extends AppCompatActivity {
     private ListView mBillsListView;
     private String mTenantUserName;

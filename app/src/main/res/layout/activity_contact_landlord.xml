@@ -6,19 +6,20 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     tools:context="com.example.brett.landlord_tenant.contactActivity"
     android:orientation="vertical">
-<TextView
-android:id="@+id/textView"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginBottom="8dp"
-android:layout_marginStart="8dp"
-android:layout_marginTop="8dp"
-android:text="@string/contact_welcome"
-android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-app:layout_constraintBottom_toTopOf="@+id/contact_list"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent"
-app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/contact_welcome"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintBottom_toTopOf="@+id/contact_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ListView
         android:id="@+id/contact_list"
