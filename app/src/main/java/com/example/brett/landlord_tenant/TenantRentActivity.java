@@ -72,7 +72,7 @@ public class TenantRentActivity extends AppCompatActivity {
                         }
                         mBillListAdapter.updateList(mBillsList);
 
-                        String billStatus = 
+                        String billStatus = "";
                     }
 
                     @Override

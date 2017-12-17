@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
     private String pass;
     String fullName;
     String identifier;
+    String landlordUsername;
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference myRef = db.getReference();
     List<Tenant> tenants = new ArrayList<Tenant>();
@@ -188,6 +189,7 @@ public class Login extends AppCompatActivity {
         for(int i =0; i<tenants.size();i++){
             if(username.equals(tenants.get(i).getmUserName()) ){
                 if(password.equals(tenants.get(i).getmPassword())){
+                    landlordUsername = tenants.get(i).getmLandlordUserName();
                     return true;
                 }
                 else{
@@ -227,6 +229,7 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("name", fullName);
         intent.putExtra("username", username.getText().toString());
+        intent.putExtra(KEY_LANDLORD_USERNAME, landlordUsername);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }

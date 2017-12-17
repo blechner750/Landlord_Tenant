@@ -29,6 +29,7 @@
         <activity
             android:name=".leaseActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".TenantRentActivity"></activity>
         <service
             android:name=".NotificationService"
             android:enabled="true"

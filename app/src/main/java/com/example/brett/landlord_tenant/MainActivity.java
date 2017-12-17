@@ -28,22 +28,6 @@ public class MainActivity extends AppCompatActivity {
     String username = "";
     String landlordName ="";
 
-    private BroadcastReceiver broadcastReceiver;
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-        if(broadcastReceiver == null){
-            broadcastReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-
-                }
-            };
-        }
-        registerReceiver(broadcastReceiver, new IntentFilter("automatic_checkIn"));
-
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             name = extras.getString("name");
             identifier = extras.getString("identifier");
             username = extras.getString("username");
+            landlordName = extras.getString("landlordUsername");
         }
 
         if(identifier.equals("landlord")){
@@ -110,10 +95,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rent(View view){
-        Intent intent = new Intent(this, LandlordRentActivity.class);
-        intent.putExtra("landlordUsername", name);
-        intent.putExtra("identifier", identifier);
-        startActivity(intent);
+        if(identifier.equals("tenant")){
+            Intent intent = new Intent(this, TenantRentActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("tenantusername", username);
+            intent.putExtra("landlordUsername", name);
+            intent.putExtra("identifier", identifier);
+            startActivity(intent);
+        }
+        else if(identifier.equals("landlord")){
+            Intent intent = new Intent(this, LandlordRentActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("landlordUsername", username);
+            intent.putExtra("identifier", identifier);
+            startActivity(intent);
+        }
+
     }
 
     public void contacts(View view){
