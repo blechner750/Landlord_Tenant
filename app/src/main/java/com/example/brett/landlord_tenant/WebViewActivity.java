@@ -4,7 +4,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -18,7 +21,7 @@ public class WebViewActivity extends AppCompatActivity {
         Intent intent = new Intent(WebViewActivity.this, SignatureActivity.class);
         startActivity(intent);
 
-        /*myWebView = findViewById(R.id.webview);
+        myWebView = findViewById(R.id.webview);
         myWebView.getSettings().setSupportZoom(true);
         myWebView.getSettings().setBuiltInZoomControls(true);
         myWebView.getSettings().setDisplayZoomControls(true);
@@ -36,7 +39,7 @@ public class WebViewActivity extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "app not installed", Toast.LENGTH_SHORT).show();
-        }*/
+        }
     }
 
     @Override

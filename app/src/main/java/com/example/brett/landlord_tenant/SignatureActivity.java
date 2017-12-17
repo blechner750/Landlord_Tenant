@@ -1,13 +1,17 @@
 package com.example.brett.landlord_tenant;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kyanogen.signatureview.SignatureView;
 
@@ -45,18 +49,30 @@ public class SignatureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bitmap = signatureView.getSignatureBitmap();
-                path = saveImage(bitmap);
+                saveImage(bitmap);
             }
         });
 
     }
-    public String saveImage(Bitmap myBitmap) {
+    public void saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File wallpaperDirectory = new File(
-                Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY /*iDyme folder*/);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        Toast.makeText(this, encodedImage, Toast.LENGTH_LONG).show();
+
+        //
+        //
+        // Insert code to save to the firebase db as a string.
+        //
+        //
+
+
+        //File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY /*iDyme folder*/);
         // have the object build the directory structure, if needed.
-        if (!wallpaperDirectory.exists()) {
+        /*if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
             Log.d("hhhhh",wallpaperDirectory.toString());
         }
@@ -77,7 +93,11 @@ public class SignatureActivity extends AppCompatActivity {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        return "";
+        return "";*/
+    }
 
+    public void loadImage(String encodedImage) {
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 }
