@@ -28,9 +28,13 @@ public class MainActivity extends AppCompatActivity {
     String username = "";
     String landlordName ="";
 
+    private static final String KEY_TENANT_USERNAME = "tenantusername";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Home");
+
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras!= null){
@@ -103,9 +107,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void utilities(View view){
-        Intent intent = new Intent(this, utilitiesActivity.class);
+        Intent intent = new Intent(this, TenantUtilitiesActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
+        intent.putExtra(KEY_TENANT_USERNAME, username);
         startActivity(intent);
     }
 

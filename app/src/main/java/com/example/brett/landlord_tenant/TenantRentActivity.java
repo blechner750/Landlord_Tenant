@@ -28,20 +28,20 @@ public class TenantRentActivity extends AppCompatActivity {
 
     private static final String LANDLORD_TENANT_DEBUG_TAG = "LandlordTenantApp";
     private static final String KEY_TENANT_USERNAME = "tenantusername";
-    private static final DatabaseReference REF = FirebaseDatabase.getInstance().getReference();
+    private static final DatabaseReference REFERENCE = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tenant_rent);
-        getSupportActionBar().setTitle("Rent");
+        setContentView(R.layout.activity_tenant_bills);
+        getSupportActionBar().setTitle("Bills");
 
         mBillsList = new ArrayList<>();
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             mTenantUserName = extras.getString(KEY_TENANT_USERNAME);
-            Log.d(LANDLORD_TENANT_DEBUG_TAG, "TenantRentActivity: onCreate called for tenant: " + mTenantUserName);
+            Log.d(LANDLORD_TENANT_DEBUG_TAG, "TenantBillsActivity: onCreate called for tenant: " + mTenantUserName);
         }
 
         mBillsListView = (ListView) findViewById(R.id.listview_tenant_bill_history);
@@ -53,34 +53,37 @@ public class TenantRentActivity extends AppCompatActivity {
         mBillStatusText.setText("");
 
         getBillsList();
+
+
     }
 
     private void getBillsList() {
-        REF
-                .child("users")
-                .child("tenants")
-                .child(mTenantUserName)
-                .child("mBills")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mBillsList.clear();
-                        mUnpaidCount = 0;
+        REFERENCE
+          .child("users")
+          .child("tenants")
+          .child(mTenantUserName)
+          .child("mBills")
+          .addValueEventListener(new ValueEventListener() {
+              @Override
+              public void onDataChange(DataSnapshot dataSnapshot) {
+                  mBillsList.clear();
+                  mUnpaidCount = 0;
 
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Bill bill = snapshot.getValue(Bill.class);
-                            mBillsList.add(bill);
-                            if (!bill.ismIsPaid()) mUnpaidCount ++;
-                        }
-                        mBillListAdapter.updateList(mBillsList);
+                  for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                      Bill bill = snapshot.getValue(Bill.class);
+                      mBillsList.add(bill);
+                      if (!bill.ismIsPaid()) mUnpaidCount ++;
+                  }
+                  mBillListAdapter.updateList(mBillsList);
 
-                        String billStatus = "";
-                    }
+                  String billStatus = "You have " + mUnpaidCount + " unpaid ";
+                  billStatus += (mUnpaidCount == 1) ? "bill." : "bills.";
+                  mBillStatusText.setText(billStatus);
+              }
+              @Override
+              public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+              }
+          });
     }
 }

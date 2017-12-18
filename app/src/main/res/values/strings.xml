@@ -2,6 +2,7 @@
     <string name="app_name">Landlord_Tenant</string>
     <string name="bill_tenants">Bill Tenants</string>
     <string name="bill_history">Bill History</string>
+    <string name="bills">Bills</string>
     <string name="choose_tenant_to_bill">Choose Tenant to Bill:</string>
     <string name="enter_amount">Enter Amount:</string>
     <string name="choose_due_date">Choose Due Date</string>
@@ -37,6 +38,7 @@
     <string name="maintenance_welcome">Maintenance Request</string>
     <string name="maintenance_title">Enter a title</string>
     <string name="maintenance_description">Enter a description of the request</string>
+    <string name="maintenance">Maintenance</string>
     <string name="maintenance_button">Send request</string>
     <string name="maintenance_list">Current Requests:</string>
     <string name="message_welcome">Send a Message</string>
