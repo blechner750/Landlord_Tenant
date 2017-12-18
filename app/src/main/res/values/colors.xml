@@ -12,4 +12,9 @@
     <color name="colorControlActivated">#58A4B0</color>
     <color name="colorControlNormal">#DAA49A</color>
 
+
+    <color name="colorDarkBlue">#373F51</color>
+    <color name="colorLightBlue">#A9BCD0</color>
+    <color name="colorAccentBlue">#58A4B0</color>
+
 </resources>

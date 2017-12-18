@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Login extends AppCompatActivity {
-    private Button mStartLandlordBillPay;
+    private Button mStartLandlordBillPay, mStartTenantBillPay, mStartTenantUtilities;
 
     private static final String KEY_LANDLORD_USERNAME = "landlordUsername";
+    private static final String KEY_TENANT_USERNAME = "tenantusername";
 
     private SharedPreferences sharedPreferences;
     private String name;
@@ -86,6 +87,7 @@ public class Login extends AppCompatActivity {
         ed.putString("pass", password.getText().toString());
         ed.commit();
     }
+
 
     public void checkDatabaseReference(){
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {

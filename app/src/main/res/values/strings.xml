@@ -10,6 +10,9 @@
     <string name="paid">PAID</string>
     <string name="unpaid">UNPAID</string>
     <string name="mark_paid">Mark Paid</string>
+    <string name="utilities">Utilities</string>
+    <string name="utility_bill_history">Sent Utility Bills</string>
+
     <string name="login_welcome_message">Welcome to the Landlord Tenant Communication App!</string>
     <string name="login_message">Please login:</string>
     <string name="login_username_hint">Enter Username</string>
@@ -53,4 +56,13 @@
     <string name="lease_button">Go to sign</string>
     <string name="rent_title">Rent Records:</string>
     <string name="utilities_title">Utilities Records:</string>
+  
+      <string-array name="utility_types">
+        <item>Water</item>
+        <item>Electric</item>
+        <item>Gas</item>
+        <item>Cable (TV/Wifi)</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

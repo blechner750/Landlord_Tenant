@@ -31,7 +31,4 @@ dependencies {
     compile 'com.kyanogen.signatureview:signature-view:1.0'
 }
 
-
-
-
 apply plugin: 'com.google.gms.google-services'
