@@ -44,6 +44,9 @@ public class maintenanceActivity extends AppCompatActivity {
 
     String name ="";
     String identifier = "";
+    String username = "";
+    String landlordUsername = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +58,17 @@ public class maintenanceActivity extends AppCompatActivity {
         if(extras!= null){
             name = extras.getString("name");
             identifier = extras.getString("identifier");
+            username = extras.getString("username");
+            landlordUsername = extras.getString("landlordUsername");
         }
 
         if(identifier.equals("landlord")){
             setContentView(R.layout.activity_maintenance_landlord);
+            myRef = myRef.child(username);
         }
         else if (identifier.equals("tenant")){
             setContentView(R.layout.activity_maintenance);
+            myRef = myRef.child(landlordUsername);
             Button button = (Button) findViewById(R.id.maint_button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,6 +80,8 @@ public class maintenanceActivity extends AppCompatActivity {
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             myRef.push().setValue(new Maintenance(name, maintenance_title.getText().toString(), maintenance_description.getText().toString()) );
+                            maintenance_title.setText("");
+                            maintenance_description.setText("");
                             Toast.makeText(maintenanceActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -107,13 +116,24 @@ public class maintenanceActivity extends AppCompatActivity {
         final ListView list = (ListView) findViewById(R.id.maintenance_list);
 
         final FirebaseListAdapter<Maintenance> mAdapter;
-        mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
-            @Override
-            protected void populateView(View v, Maintenance model, int position) {
-                ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
-                ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
-            }
-        };
+        if(identifier.equals("landlord")){
+            mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
+                @Override
+                protected void populateView(View v, Maintenance model, int position) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
+                    ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
+                }
+            };
+        }
+        else{
+            mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
+                @Override
+                protected void populateView(View v, Maintenance model, int position) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
+                    ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
+                }
+            };
+        }
         list.setAdapter(mAdapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

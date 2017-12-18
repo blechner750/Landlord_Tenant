@@ -60,7 +60,12 @@ public class MainActivity extends AppCompatActivity {
         Intent x = new Intent(getApplicationContext(), NotificationService.class);
         x.putExtra("name", name);
         x.putExtra("identifier", identifier);
-        x.putExtra("landlord",landlordName);
+        if(identifier.equals("landlord")){
+            x.putExtra("landlord", username);
+        }
+        else{
+            x.putExtra("landlord",landlordName);
+        }
         startService(x);
     }
 
@@ -68,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, maintenanceActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
+        intent.putExtra("tenantusername", username);
+        intent.putExtra("landlordUsername", landlordName);
         startActivity(intent);
     }
 
@@ -75,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, messagesActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
+        intent.putExtra("tenantusername", username);
+        intent.putExtra("landlordUsername", landlordName);
         startActivity(intent);
     }
 
@@ -118,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, leaseActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
+        intent.putExtra("tenantusername", username);
+        intent.putExtra("landlordUsername", landlordName);
         startActivity(intent);
     }
 }

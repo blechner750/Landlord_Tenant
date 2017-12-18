@@ -45,7 +45,8 @@ public class NotificationService extends Service {
 
     @Override
     public void onCreate(){
-        maintenance.addValueEventListener(new ValueEventListener() {
+
+        maintenance.child(landlord).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
@@ -65,11 +66,11 @@ public class NotificationService extends Service {
             }
         });
 
-        messages.addValueEventListener(new ValueEventListener() {
+        messages.child(landlord).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-                   messages_count++;
+                    messages_count++;
                 }
                 if(slave2 <= messages_count){
                     postNotification("Landlord_tenant", "New message!");
@@ -92,9 +93,9 @@ public class NotificationService extends Service {
         String CHANNEL_ID = "my_channel_01";
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(title)
-                .setContentText(text);
+          .setSmallIcon(R.drawable.ic_launcher_foreground)
+          .setContentTitle(title)
+          .setContentText(text);
         mBuilder.setContentIntent(resultPendingIntent);
         int mNotificationID = 001;
         NotificationManager mNotifyManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
