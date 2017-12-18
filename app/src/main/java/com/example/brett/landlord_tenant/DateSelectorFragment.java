@@ -37,6 +37,7 @@ public class DateSelectorFragment extends DialogFragment {
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
                         LandlordRentActivity activity = (LandlordRentActivity) getActivity();
+
                         activity.onDateSelected(date);
                     }
                 })

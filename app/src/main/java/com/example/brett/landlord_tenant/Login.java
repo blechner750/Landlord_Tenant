@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Login extends AppCompatActivity {
-    private Button mStartLandlordBillPay;
+    private Button mStartLandlordBillPay, mStartTenantBillPay, mStartTenantUtilities;
 
     private static final String KEY_LANDLORD_USERNAME = "landlordUsername";
+    private static final String KEY_TENANT_USERNAME = "tenantusername";
 
     private SharedPreferences sharedPreferences;
     private String name;
@@ -90,6 +91,29 @@ public class Login extends AppCompatActivity {
     public void checkDatabaseReference(){
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LandlordRentActivity.class);
+                intent.putExtra(KEY_LANDLORD_USERNAME, "TESTLANDLORD");
+                startActivity(intent);
+            }
+        });
+
+        mStartTenantBillPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TenantBillsActivity.class);
+                intent.putExtra(KEY_TENANT_USERNAME, "TestTenant001");
+                startActivity(intent);
+            }
+        });
+
+        mStartTenantUtilities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TenantUtilitiesActivity.class);
+                intent.putExtra(KEY_TENANT_USERNAME, "TestTenant001");
+                startActivity(intent);
+
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("users")){
                     if(dataSnapshot.child("users").hasChild("tenants")){
