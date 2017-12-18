@@ -19,7 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
         else{
             setContentView(R.layout.activity_tenant_main);
         }
+
+        TextView welcome_date = (TextView) findViewById(R.id.textView3);
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+        welcome_date.setText(format.format(currentTime));
+
 
         TextView welcome_name = (TextView) findViewById(R.id.welcome_name);
         welcome_name.setText(name);
