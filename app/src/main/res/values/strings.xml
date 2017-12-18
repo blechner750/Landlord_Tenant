@@ -45,6 +45,7 @@
     <string name="message_title">Enter message</string>
     <string name="message_button">Send message</string>
     <string name="message_list">Messages:</string>
+    <string name="open_venmo">Open Venmo</string>
     <string name="contact_welcome">Contacts:</string>
     <string name="contact_message">Set your info visible to other tenants:</string>
     <string name="contact_buttonOn">Visible</string>

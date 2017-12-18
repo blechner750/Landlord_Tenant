@@ -1,8 +1,11 @@
 package com.example.brett.landlord_tenant;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ public class TenantRentActivity extends AppCompatActivity {
     private ListView mBillsListView;
     private String mTenantUserName;
     private ArrayList<Bill> mBillsList;
+    private Button mWebviewButton;
     private BillListAdapter mBillListAdapter;
     private TextView mBillStatusText;
     private int mUnpaidCount;
@@ -54,7 +58,14 @@ public class TenantRentActivity extends AppCompatActivity {
 
         getBillsList();
 
-
+        mWebviewButton = (Button) findViewById(R.id.button_open_webview);
+        mWebviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getBillsList() {

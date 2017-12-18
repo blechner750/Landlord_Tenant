@@ -17,9 +17,7 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-
-        Intent intent = new Intent(WebViewActivity.this, SignatureActivity.class);
-        startActivity(intent);
+        getSupportActionBar().setTitle("Pay With Venmo");
 
         myWebView = findViewById(R.id.webview);
         myWebView.getSettings().setSupportZoom(true);
@@ -63,4 +61,3 @@ public class WebViewActivity extends AppCompatActivity {
         }
     }
 }
-

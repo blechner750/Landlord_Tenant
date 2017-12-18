@@ -42,6 +42,19 @@
         android:divider="@color/colorAccentBlue"
         android:layout_below="@id/bill_history_underline" />
 
+    <Button
+        android:id="@+id/button_open_webview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/date_button"
+        android:text="@string/open_venmo"
+        android:textColor="@color/colorSalmon"
+        android:textSize="15dp"
+        android:padding="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@id/bill_status_box"
+        android:layout_centerHorizontal="true"/>
+
     <LinearLayout
         android:id="@+id/bill_status_box"
         android:layout_width="match_parent"
