@@ -27,6 +27,8 @@ public class messagesActivity extends AppCompatActivity {
     String message;
     String name ="";
     String identifier = "";
+    String username = "";
+    String landlordUsername = "";
 
     FirebaseDatabase db = FirebaseDatabase.getInstance();
     DatabaseReference myRef = db.getReference().child("messages");
@@ -43,6 +45,8 @@ public class messagesActivity extends AppCompatActivity {
         if(extras!= null){
             name = extras.getString("name");
             identifier = extras.getString("identifier");
+            username = extras.getString("username");
+            landlordUsername = extras.getString("landlordUsername");
         }
 
         message_prompt = (EditText) findViewById(R.id.messages_prompt);
@@ -55,13 +59,25 @@ public class messagesActivity extends AppCompatActivity {
         final ListView list = (ListView) findViewById(R.id.messages_list);
 
         final FirebaseListAdapter<Maintenance> mAdapter;
-        mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
-            @Override
-            protected void populateView(View v, Maintenance model, int position) {
-                ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
-                ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
-            }
-        };
+        if(identifier.equals("landlord")){
+            mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef.child(username)) {
+                @Override
+                protected void populateView(View v, Maintenance model, int position) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
+                    ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
+                }
+            };
+        }
+        else{
+            mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef.child(landlordUsername)) {
+                @Override
+                protected void populateView(View v, Maintenance model, int position) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
+                    ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
+                }
+            };
+        }
+
         list.setAdapter(mAdapter);
 
 
@@ -74,8 +90,16 @@ public class messagesActivity extends AppCompatActivity {
 
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        myRef.push().setValue(new Maintenance(name, message_prompt.getText().toString(), "" ));
-                        Toast.makeText(messagesActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
+                        if(identifier.equals("landlord")){
+                            myRef.child(username).push().setValue(new Maintenance(name, message_prompt.getText().toString(), "" ));
+                            Toast.makeText(messagesActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            myRef.child(landlordUsername).push().setValue(new Maintenance(name, message_prompt.getText().toString(), "" ));
+                            Toast.makeText(messagesActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
+                        }
+                        message_prompt.setText("");
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

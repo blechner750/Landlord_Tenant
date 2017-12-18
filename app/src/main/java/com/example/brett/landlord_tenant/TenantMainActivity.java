@@ -1,6 +1,9 @@
 package com.example.brett.landlord_tenant;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -18,56 +21,56 @@ import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
-public class TenantMainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     String name = "";
     String identifier = "";
     String username = "";
     String landlordName ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tenant_main);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras!= null){
             name = extras.getString("name");
             identifier = extras.getString("identifier");
             username = extras.getString("username");
+            landlordName = extras.getString("landlordUsername");
         }
+
+        if(identifier.equals("landlord")){
+            setContentView(R.layout.activity_landlord_main);
+        }
+        else if (identifier.equals("tenant")){
+            setContentView(R.layout.activity_tenant_main);
+        }
+        else{
+            setContentView(R.layout.activity_tenant_main);
+        }
+
         TextView welcome_name = (TextView) findViewById(R.id.welcome_name);
         welcome_name.setText(name);
-
-        getLandlord();
 
         Intent x = new Intent(getApplicationContext(), NotificationService.class);
         x.putExtra("name", name);
         x.putExtra("identifier", identifier);
-        x.putExtra("landlord",landlordName);
+        if(identifier.equals("landlord")){
+            x.putExtra("landlord", username);
+        }
+        else{
+            x.putExtra("landlord",landlordName);
+        }
+
         startService(x);
-    }
-
-    private void getLandlord() {
-        DatabaseReference landlordRef = FirebaseDatabase.getInstance().getReference().child("users").child("tenants");
-        landlordRef.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Landlord landlord = dataSnapshot.getValue(Landlord.class);
-                if(landlord != null) {
-                    landlordName = landlord.getmUsername();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void maintenance(View view){
         Intent intent = new Intent(this, maintenanceActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
@@ -75,27 +78,52 @@ public class TenantMainActivity extends AppCompatActivity {
     public void messages(View view){
         Intent intent = new Intent(this, messagesActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 
     public void rent(View view){
-        Intent intent = new Intent(this, rentActivity.class);
-        startActivity(intent);
+        if(identifier.equals("tenant")){
+            Intent intent = new Intent(this, TenantRentActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("tenantusername", username);
+            intent.putExtra("identifier", identifier);
+            startActivity(intent);
+        }
+        else if(identifier.equals("landlord")){
+            Intent intent = new Intent(this, LandlordRentActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("landlordUsername", username);
+            intent.putExtra("identifier", identifier);
+            startActivity(intent);
+        }
+
     }
 
     public void contacts(View view){
         Intent intent = new Intent(this, contactActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
+        intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 
     public void utilities(View view){
         Intent intent = new Intent(this, utilitiesActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 
     public void lease(View view){
         Intent intent = new Intent(this, leaseActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
+        intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
 }

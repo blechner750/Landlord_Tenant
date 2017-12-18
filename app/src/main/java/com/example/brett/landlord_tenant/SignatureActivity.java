@@ -1,14 +1,21 @@
 package com.example.brett.landlord_tenant;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.kyanogen.signatureview.SignatureView;
 
 import java.io.ByteArrayOutputStream;
@@ -22,6 +29,10 @@ public class SignatureActivity extends AppCompatActivity {
     Bitmap bitmap;
     Button clear,save;
     SignatureView signatureView;
+    String name = "";
+    String landlordUserName ="";
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = db.getReference().child("lease");
     String path;
     private static final String IMAGE_DIRECTORY = "/signdemo";
     @Override
@@ -29,6 +40,12 @@ public class SignatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
 
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras!= null){
+            name = extras.getString("name");
+            landlordUserName = extras.getString("landlordUsername");
+        }
 
         signatureView = findViewById(R.id.signature_view);
         clear = findViewById(R.id.clear);
@@ -45,39 +62,27 @@ public class SignatureActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 bitmap = signatureView.getSignatureBitmap();
-                path = saveImage(bitmap);
+                saveImage(bitmap);
             }
         });
 
     }
-    public String saveImage(Bitmap myBitmap) {
+    public void saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File wallpaperDirectory = new File(
-                Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY /*iDyme folder*/);
-        // have the object build the directory structure, if needed.
-        if (!wallpaperDirectory.exists()) {
-            wallpaperDirectory.mkdirs();
-            Log.d("hhhhh",wallpaperDirectory.toString());
-        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        Toast.makeText(this, encodedImage, Toast.LENGTH_LONG).show();
 
-        try {
-            File f = new File(wallpaperDirectory, Calendar.getInstance()
-                    .getTimeInMillis() + ".jpg");
-            f.createNewFile();
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-            MediaScannerConnection.scanFile(SignatureActivity.this,
-                    new String[]{f.getPath()},
-                    new String[]{"image/jpeg"}, null);
-            fo.close();
-            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
+        myRef.child(landlordUserName).push().setValue(new Maintenance(name, encodedImage, ""));
+    }
 
-            return f.getAbsolutePath();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        return "";
 
+    // String encodedImage should be pulled from the firebase db
+    public void loadImage(String encodedImage) {
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 }

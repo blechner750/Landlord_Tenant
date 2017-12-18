@@ -44,42 +44,96 @@ public class maintenanceActivity extends AppCompatActivity {
 
     String name ="";
     String identifier = "";
+    String username = "";
+    String landlordUsername = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maintenance);
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras!= null){
             name = extras.getString("name");
             identifier = extras.getString("identifier");
+            username = extras.getString("username");
+            landlordUsername = extras.getString("landlordUsername");
         }
 
-        Button button = (Button) findViewById(R.id.maint_button);
+        if(identifier.equals("landlord")){
+            setContentView(R.layout.activity_maintenance_landlord);
+            myRef = myRef.child(username);
+        }
+        else if (identifier.equals("tenant")){
+            setContentView(R.layout.activity_maintenance);
+            myRef = myRef.child(landlordUsername);
+            Button button = (Button) findViewById(R.id.maint_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(maintenanceActivity.this);
 
-        maintenance_title = (EditText) findViewById(R.id.maintenance_title);
-        maintenance_description = (EditText) findViewById(R.id.maintenance_description);
+                    builder.setTitle("You are sure you want to submit?");
 
-        mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
-        title = mPrefs.getString("title", maintenance_title.getText().toString());
-        description = mPrefs.getString("description", maintenance_description.getText().toString());
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            myRef.push().setValue(new Maintenance(name, maintenance_title.getText().toString(), maintenance_description.getText().toString()) );
+                            maintenance_title.setText("");
+                            maintenance_description.setText("");
+                            Toast.makeText(maintenanceActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-        maintenance_title.setText(title);
-        maintenance_description.setText(description);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+            maintenance_title = (EditText) findViewById(R.id.maintenance_title);
+            maintenance_description = (EditText) findViewById(R.id.maintenance_description);
+
+            mPrefs = getSharedPreferences("key", Context.MODE_PRIVATE);
+            title = mPrefs.getString("title", maintenance_title.getText().toString());
+            description = mPrefs.getString("description", maintenance_description.getText().toString());
+
+            maintenance_title.setText(title);
+            maintenance_description.setText(description);
+        }
+        else{
+            setContentView(R.layout.activity_maintenance);
+        }
+
+
+
+
         checkDatabaseReference();
 
         final ListView list = (ListView) findViewById(R.id.maintenance_list);
 
         final FirebaseListAdapter<Maintenance> mAdapter;
-        mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
-            @Override
-            protected void populateView(View v, Maintenance model, int position) {
-                ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
-                ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
-            }
-        };
+        if(identifier.equals("landlord")){
+            mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
+                @Override
+                protected void populateView(View v, Maintenance model, int position) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
+                    ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
+                }
+            };
+        }
+        else{
+            mAdapter = new FirebaseListAdapter<Maintenance>(this, Maintenance.class, android.R.layout.simple_list_item_2, myRef) {
+                @Override
+                protected void populateView(View v, Maintenance model, int position) {
+                    ((TextView)v.findViewById(android.R.id.text1)).setText(model.getTitle());
+                    ((TextView)v.findViewById(android.R.id.text2)).setText("Submitted by: " + model.getName());
+                }
+            };
+        }
         list.setAdapter(mAdapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,42 +168,21 @@ public class maintenanceActivity extends AppCompatActivity {
             }
         });
 
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(maintenanceActivity.this);
-
-                builder.setTitle("You are sure you want to submit?");
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        myRef.push().setValue(new Maintenance(name, maintenance_title.getText().toString(), maintenance_description.getText().toString()) );
-                        Toast.makeText(maintenanceActivity.this, "Request submitted", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
     }
 
     protected void onPause(){
         super.onPause();
 
-        maintenance_title = (EditText) findViewById(R.id.maintenance_title);
-        maintenance_description = (EditText) findViewById(R.id.maintenance_description);
+        if(identifier.equals("tenant")){
+            maintenance_title = (EditText) findViewById(R.id.maintenance_title);
+            maintenance_description = (EditText) findViewById(R.id.maintenance_description);
 
-        SharedPreferences.Editor ed = mPrefs.edit();
-        ed.putString("title", maintenance_title.getText().toString());
-        ed.putString("description", maintenance_description.getText().toString());
-        ed.commit();
+            SharedPreferences.Editor ed = mPrefs.edit();
+            ed.putString("title", maintenance_title.getText().toString());
+            ed.putString("description", maintenance_description.getText().toString());
+            ed.commit();
+        }
+
     }
 
     public void checkDatabaseReference(){

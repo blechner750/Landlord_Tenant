@@ -47,9 +47,13 @@
     <string name="contact_buttonOn">Visible</string>
     <string name="contact_buttonOff">Not Visible</string>
     <string name="preference_file_key">preferences</string>
+    <string name="lease_checkbox_read">I have received a copy of the lease</string>
+    <string name="lease_landlord_title">Signatures submitted:</string>
+    <string name="lease_landlord_button">Remove all signatures</string>
     <string name="lease_checkbox">I have read and understand the terms of the lease</string>
     <string name="lease_prompt">Electronic Signature</string>
-    <string name="lease_button">Go to sign</string>
+    <string name="lease_button_save">Submit Signature</string>
+    <string name="lease_button_clear">Clear Signature</string>
     <string name="rent_title">Rent Records:</string>
     <string name="utilities_title">Utilities Records:</string>
 </resources>
