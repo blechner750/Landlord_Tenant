@@ -45,7 +45,8 @@ public class NotificationService extends Service {
 
     @Override
     public void onCreate(){
-        maintenance.addValueEventListener(new ValueEventListener() {
+
+        maintenance.child(landlord).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
@@ -65,7 +66,7 @@ public class NotificationService extends Service {
             }
         });
 
-        messages.addValueEventListener(new ValueEventListener() {
+        messages.child(landlord).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
