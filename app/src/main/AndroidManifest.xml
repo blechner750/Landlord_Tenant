@@ -19,8 +19,31 @@
         <activity
             android:name=".LandlordRentActivity"
             android:theme="@style/AppTheme" />
+
         <activity android:name=".TenantBillsActivity"></activity>
         <activity android:name=".TenantUtilitiesActivity" />
+
+        <activity
+            android:name=".createAccount"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".maintenanceActivity" />
+        <activity android:name=".messagesActivity" />
+        <activity android:name=".contactActivity" />
+        <activity android:name=".utilitiesActivity" />
+        <activity
+            android:name=".leaseActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".TenantRentActivity" />
+        <activity android:name=".SignatureActivity" />
+
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".WebViewActivity"></activity>
+
     </application>
 
 </manifest>

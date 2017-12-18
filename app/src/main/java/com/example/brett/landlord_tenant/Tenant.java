@@ -22,6 +22,7 @@ public class Tenant {
     private String mPassword;
     private String mEmail;
     private int mPhoneNumber;
+    private boolean contact_visibility;
 
     private static final String LANDLORD_TENANT_DEBUG_TAG = "LandlordTenantApp";
 /*
@@ -48,6 +49,7 @@ public class Tenant {
         mPassword = "";
         mEmail = "";
         mPhoneNumber = 0;
+        contact_visibility = false;
     }
 
     public String getmFirstName() {
@@ -69,6 +71,8 @@ public class Tenant {
     public String getmLandlordUserName() {
         return mLandlordUserName;
     }
+
+    public boolean getmVisibility(){return contact_visibility;}
 
     public void setmLandlordUserName(String mLandlordUserName) {
         Log.d("LandlordTenantApp", "setLandlord called");
@@ -125,6 +129,8 @@ public class Tenant {
     public void setmEmail(String mEmail) {
         this.mEmail = mEmail;
     }
+
+    public void setmVisibility(boolean b){this.contact_visibility = b;}
 
     public void updateDatabase() {
         Log.d(LANDLORD_TENANT_DEBUG_TAG, "updating tenant in database: " + this.mFirstName + " " + this.mLastName + " " + this.mUserName);
