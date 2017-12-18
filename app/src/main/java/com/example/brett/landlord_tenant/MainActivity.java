@@ -56,13 +56,21 @@ public class MainActivity extends AppCompatActivity {
         Intent x = new Intent(getApplicationContext(), NotificationService.class);
         x.putExtra("name", name);
         x.putExtra("identifier", identifier);
-        x.putExtra("landlord",landlordName);
+        if(identifier.equals("landlord")){
+            x.putExtra("landlord", username);
+        }
+        else{
+            x.putExtra("landlord",landlordName);
+        }
+
         startService(x);
     }
 
     public void maintenance(View view){
         Intent intent = new Intent(this, maintenanceActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
@@ -70,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     public void messages(View view){
         Intent intent = new Intent(this, messagesActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
@@ -79,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TenantRentActivity.class);
             intent.putExtra("name", name);
             intent.putExtra("tenantusername", username);
-            intent.putExtra("landlordUsername", landlordName);
             intent.putExtra("identifier", identifier);
             startActivity(intent);
         }
@@ -112,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
     public void lease(View view){
         Intent intent = new Intent(this, leaseActivity.class);
         intent.putExtra("name", name);
+        intent.putExtra("username", username);
+        intent.putExtra("landlordUsername", landlordName);
         intent.putExtra("identifier", identifier);
         startActivity(intent);
     }
