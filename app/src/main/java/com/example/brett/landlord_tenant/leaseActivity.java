@@ -49,6 +49,7 @@ public class leaseActivity extends AppCompatActivity {
     List<String> myTenantList = new ArrayList<>();
     List<Maintenance> completedTenants = new ArrayList<>();
     List<Tenant> tenants = new ArrayList<>();
+    List<Tenant> myTenants = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,11 +153,28 @@ public class leaseActivity extends AppCompatActivity {
 
             }
         });
-        checkmyTenants();
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                checkmyTenants();
+            }
+        };
+        Handler h = new Handler();
+        h.postDelayed(r, 100);
     }
 
     public void checkmyTenants() {
-        myRef.child("lease").child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        for(int i =0; i<myTenantList.size();i++){
+            for(int x=0; x<tenants.size();x++){
+                if(myTenantList.get(i).equals(tenants.get(x).getmUserName())){
+                    myTenants.add(tenants.get(x));
+                }
+            }
+        }
+
+        DatabaseReference dbref = myRef.child("lease").child(username);
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
@@ -176,19 +194,15 @@ public class leaseActivity extends AppCompatActivity {
             }
         };
         Handler h = new Handler();
-        h.postDelayed(r, 20);
+        h.postDelayed(r, 100);
     }
 
     public boolean findCompletedTenants(String _name){
 
-        for(int i =0; i<myTenantList.size();i++) {
-            for(int x =0; x<tenants.size(); x++){
-                String theName = tenants.get(x).getmFirstName() + " " + tenants.get(x).getmLastName();
-                String theUsername = tenants.get(x).getmUserName();
-                if(theUsername.equals(myTenantList.get(i))){
-                    if(theName.equals(_name)){
-                        return true;
-                    }
+        for(int i=0;i<myTenants.size();i++){
+            for(int x=0; x<completedTenants.size();x++){
+                if(_name.equals(completedTenants.get(x).getName())){
+                    return true;
                 }
             }
         }
@@ -198,11 +212,11 @@ public class leaseActivity extends AppCompatActivity {
 
     public void populateList(){
         ListView listView = (ListView) findViewById(R.id.lease_landlord_list);
-        ArrayAdapter<Maintenance> mAdapter = new ArrayAdapter<Maintenance>(this, android.R.layout.simple_list_item_checked, completedTenants){
+        ArrayAdapter<Tenant> mAdapter = new ArrayAdapter<Tenant>(this, android.R.layout.simple_list_item_checked, myTenants){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
-                Maintenance maintenance = getItem(position);
-                String _name = maintenance.getName();
+                Tenant t = getItem(position);
+                String _name = t.getmFirstName() + " " + t.getmLastName();
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_checked, parent, false);
                 }
