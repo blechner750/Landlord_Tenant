@@ -70,6 +70,8 @@ public class Login extends AppCompatActivity {
                 if(username != null && password != null){
                     if(findType(username.getText().toString(), password.getText().toString())){
                         login(v);
+                        username.setText("");
+                        password.setText("");
                     }
                 }
 

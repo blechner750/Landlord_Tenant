@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, maintenanceActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
-        intent.putExtra("tenantusername", username);
+        intent.putExtra("username", username);
         intent.putExtra("landlordUsername", landlordName);
         startActivity(intent);
     }
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, messagesActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
-        intent.putExtra("tenantusername", username);
+        intent.putExtra("username", username);
         intent.putExtra("landlordUsername", landlordName);
         startActivity(intent);
     }
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, leaseActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("identifier", identifier);
-        intent.putExtra("tenantusername", username);
+        intent.putExtra("username", username);
         intent.putExtra("landlordUsername", landlordName);
         startActivity(intent);
     }

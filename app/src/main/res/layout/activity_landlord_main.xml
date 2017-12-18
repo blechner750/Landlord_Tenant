@@ -126,6 +126,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="packed"/>
 
+    <Button
+        android:id="@+id/button_lease"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:background="@drawable/submit_bill_button"
+        android:text="@string/welcome_lease"
+        android:drawableTop="@drawable/button_lease"
+        android:padding="5dp"
+        android:onClick="lease"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/welcome_button_message"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <!--<ImageView-->
         <!--android:id="@+id/image_message"-->
         <!--android:layout_width="130dp"-->
