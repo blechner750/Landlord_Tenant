@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="landlord / tenant"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="43sp"
         android:fontFamily="sans-serif-thin"
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toTopOf="parent"

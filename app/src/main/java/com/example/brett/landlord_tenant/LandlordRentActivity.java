@@ -131,18 +131,14 @@ public class LandlordRentActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Bill bill = new Bill(mSelectedTenant, mLandlordUserName, mBillAmount, mDate, mBillMessage);
                 REF
-                        .child("users")
-                        .child("landlords")
-                        .child(mLandlordUserName)
                         .child("mBills")
+                        .child(mLandlordUserName)
                         .child(bill.getmUUID().toString())
                         .setValue(bill);
 
                 REF
-                        .child("users")
-                        .child("tenants")
-                        .child(mSelectedTenant)
                         .child("mBills")
+                        .child(mSelectedTenant)
                         .child(bill.getmUUID().toString())
                         .setValue(bill);
 
@@ -167,37 +163,29 @@ public class LandlordRentActivity extends AppCompatActivity{
                Bill bill = mBillsList.get(i);
                if(!bill.ismIsPaid()) {
                    REF
-                           .child("users")
-                           .child("landlords")
-                           .child(mLandlordUserName)
                            .child("mBills")
+                           .child(mLandlordUserName)
                            .child(bill.getmUUID())
                            .child("mIsPaid")
                            .setValue(true);
 
                    REF
-                           .child("users")
-                           .child("tenants")
+                           .child("mBils")
                            .child(bill.getmTenant())
-                           .child("mBills")
                            .child(bill.getmUUID())
                            .child("mIsPaid")
                            .setValue(true);
                } else {
                    REF
-                           .child("users")
-                           .child("landlords")
-                           .child(mLandlordUserName)
                            .child("mBills")
+                           .child(mLandlordUserName)
                            .child(bill.getmUUID())
                            .child("mIsPaid")
                            .setValue(false);
 
                    REF
-                           .child("users")
-                           .child("tenants")
-                           .child(bill.getmTenant())
                            .child("mBills")
+                           .child(bill.getmTenant())
                            .child(bill.getmUUID())
                            .child("mIsPaid")
                            .setValue(false);
@@ -240,10 +228,8 @@ public class LandlordRentActivity extends AppCompatActivity{
 
     private void getBillsList() {
         REF
-                .child("users")
-                .child("landlords")
-                .child(mLandlordUserName)
                 .child("mBills")
+                .child(mLandlordUserName)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

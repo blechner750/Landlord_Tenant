@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="message"
+        android:textColor="@color/colorSalmon"
         android:layout_marginStart="5dp"
         android:layout_below="@id/text_bill_receiver"
         android:layout_toEndOf="@id/text_bill_amount_landlord"/>

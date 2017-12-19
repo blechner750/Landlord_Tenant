@@ -93,7 +93,7 @@ public class NotificationService extends Service {
         String CHANNEL_ID = "my_channel_01";
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-          .setSmallIcon(R.drawable.ic_launcher_foreground)
+          .setSmallIcon(R.drawable.ic_action_name)
           .setContentTitle(title)
           .setContentText(text);
         mBuilder.setContentIntent(resultPendingIntent);

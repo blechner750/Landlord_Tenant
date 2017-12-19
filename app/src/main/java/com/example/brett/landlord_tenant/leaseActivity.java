@@ -51,6 +51,8 @@ public class leaseActivity extends AppCompatActivity {
     List<Tenant> tenants = new ArrayList<>();
     List<Tenant> myTenants = new ArrayList<>();
 
+    private static final String LANDLORD_TENANT_DEBUG_TAG = "LandlordTenantApp";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,7 +162,7 @@ public class leaseActivity extends AppCompatActivity {
             }
         };
         Handler h = new Handler();
-        h.postDelayed(r, 100);
+        h.postDelayed(r, 150);
     }
 
     public void checkmyTenants() {
@@ -194,7 +196,7 @@ public class leaseActivity extends AppCompatActivity {
             }
         };
         Handler h = new Handler();
-        h.postDelayed(r, 100);
+        h.postDelayed(r, 150);
     }
 
     public boolean findCompletedTenants(String _name){

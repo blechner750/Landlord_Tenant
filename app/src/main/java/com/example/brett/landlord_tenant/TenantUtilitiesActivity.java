@@ -48,10 +48,9 @@ public class TenantUtilitiesActivity extends AppCompatActivity {
 	private static final String LANDLORD_USERNAME_QUERY = "mLandlordUserName";
 	private static final String UTILITIES_QUERY = "mUtilityBills";
 	private static final String BILLS_QUERY = "mBills";
-	private static final String TENANTS_QUERY = "tenants";
 	private static final String LANDLORDS_QUERY = "landlords";
 
-	private static final DatabaseReference REF = FirebaseDatabase.getInstance().getReference().child("users");
+	private static final DatabaseReference REF = FirebaseDatabase.getInstance().getReference();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -155,16 +154,14 @@ public class TenantUtilitiesActivity extends AppCompatActivity {
 				String billMessage = mSelectedUtilityType + " - " + mBillMessage;
 				Bill bill = new Bill(mSelectedTenant, mTenantUserName, mBillAmount, mDate, billMessage);
 				REF
-					.child(TENANTS_QUERY)
-					.child(mTenantUserName)
 					.child(UTILITIES_QUERY)
+					.child(mTenantUserName)
 					.child(bill.getmUUID().toString())
 					.setValue(bill);
 
 				REF
-					.child(TENANTS_QUERY)
-					.child(mSelectedTenant)
 					.child(BILLS_QUERY)
+					.child(mSelectedTenant)
 					.child(bill.getmUUID().toString())
 					.setValue(bill);
 				mInputBillAmount.setText("");
@@ -183,34 +180,32 @@ public class TenantUtilitiesActivity extends AppCompatActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 				Bill bill = mBillList.get(i);
-				DatabaseReference tenantsRef = REF
-					.child("tenants");
 
 				if(!bill.ismIsPaid()) {
-					tenantsRef
-						.child(mTenantUserName)
+					REF
 						.child(UTILITIES_QUERY)
+						.child(mTenantUserName)
 						.child(bill.getmUUID().toString())
 						.child("mIsPaid")
 						.setValue(true);
 
-					tenantsRef
-						.child(mSelectedTenant)
+					REF
 						.child(BILLS_QUERY)
+						.child(mSelectedTenant)
 						.child(bill.getmUUID().toString())
 						.child("mIsPaid")
 						.setValue(true);
 				} else {
-					tenantsRef
-						.child(mTenantUserName)
+					REF
 						.child(UTILITIES_QUERY)
+						.child(mTenantUserName)
 						.child(bill.getmUUID().toString())
 						.child("mIsPaid")
 						.setValue(false);
 
-					tenantsRef
-						.child(mSelectedTenant)
+					REF
 						.child(BILLS_QUERY)
+						.child(mSelectedTenant)
 						.child(bill.getmUUID().toString())
 						.child("mIsPaid")
 						.setValue(false);
@@ -225,6 +220,7 @@ public class TenantUtilitiesActivity extends AppCompatActivity {
 
 	private void getLandlord() {
 		REF
+			.child("users")
 			.child("tenants")
 			.child(mTenantUserName)
 			.child(LANDLORD_USERNAME_QUERY)
@@ -246,6 +242,7 @@ public class TenantUtilitiesActivity extends AppCompatActivity {
 
 	private void getTenantList() {
 		REF
+			.child("users")
 			.child(LANDLORDS_QUERY)
 			.child(mLandlordUserName)
 			.child("mTenants")
@@ -271,9 +268,8 @@ public class TenantUtilitiesActivity extends AppCompatActivity {
 
 	private void getBillsList() {
 		REF
-			.child(TENANTS_QUERY)
-			.child(mTenantUserName)
 			.child(UTILITIES_QUERY)
+			.child(mTenantUserName)
 			.addValueEventListener(new ValueEventListener() {
 				@Override
 				public void onDataChange(DataSnapshot dataSnapshot) {

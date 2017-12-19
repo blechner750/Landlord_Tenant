@@ -70,10 +70,8 @@ public class TenantRentActivity extends AppCompatActivity {
 
     private void getBillsList() {
         REFERENCE
-          .child("users")
-          .child("tenants")
-          .child(mTenantUserName)
           .child("mBills")
+          .child(mTenantUserName)
           .addValueEventListener(new ValueEventListener() {
               @Override
               public void onDataChange(DataSnapshot dataSnapshot) {

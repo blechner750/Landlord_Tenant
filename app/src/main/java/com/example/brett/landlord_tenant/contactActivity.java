@@ -230,7 +230,7 @@ public class contactActivity extends AppCompatActivity {
                 }
             };
             Handler h = new Handler();
-            h.postDelayed(r, 10);
+            h.postDelayed(r, 50);
         }
         else if(identifier.equals("tenant")){
             myRef.child("users")
@@ -256,7 +256,7 @@ public class contactActivity extends AppCompatActivity {
                 }
             };
             Handler h = new Handler();
-            h.postDelayed(r, 10);
+            h.postDelayed(r, 50);
         }
 
     }
@@ -291,7 +291,7 @@ public class contactActivity extends AppCompatActivity {
             }
         };
         Handler h = new Handler();
-        h.postDelayed(r, 10);
+        h.postDelayed(r, 50);
     }
 
     public void populateList(){
